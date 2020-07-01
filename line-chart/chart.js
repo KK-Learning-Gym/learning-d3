@@ -48,6 +48,8 @@ async function drawLineChart() {
     .attr("height", dimensions.boundedHeight - freezingTempPlacement)
     .attr("fill", "#e0f3f3");
 
+  console.log(freezingTempPlacement);
+
   const xScale = d3
     .scaleTime()
     .domain(d3.extent(dataset, xAccessor))

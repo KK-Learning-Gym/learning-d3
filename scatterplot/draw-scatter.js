@@ -3,6 +3,8 @@ async function drawScatter() {
   const yAccessor = (d) => d.humidity;
   const xAccessor = (d) => d.dewPoint;
 
+  const colorAccessor = (d) => d.cloudCover;
+
   const width = d3.min([window.innerWidth * 0.9, window.innerHeight * 0.9]);
 
   const dimensions = {
@@ -46,6 +48,11 @@ async function drawScatter() {
     .range([0, dimensions.boundedWidth])
     .nice();
 
+  const colorScale = d3
+    .scaleLinear()
+    .domain(d3.extent(dataset, colorAccessor))
+    .range(["skyblue", "darkslategrey"]);
+
   // dataset.forEach((d) => {
   //   bounds
   //     .append("circle")
@@ -62,7 +69,7 @@ async function drawScatter() {
     .attr("cx", (d) => xScale(xAccessor(d)))
     .attr("cy", (d) => yScale(yAccessor(d)))
     .attr("r", 5)
-    .attr("fill", "cornflowerblue");
+    .attr("fill", (d) => colorScale(colorAccessor(d)));
 
   // function drawDots(dataset, color) {
   //   const dots = bounds.selectAll("circle").data(dataset);
